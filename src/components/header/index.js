@@ -5,6 +5,7 @@ import axios from '../../axios';
 import Row from '../row';
 import requests from '../../request';
 import { Background, ButtonLink, Container, PlayButton, Search, SearchIcon, SearchInput, Logo, Dropdown, Profile, Picture, Group, Feature, Text, FeatureCallOut, Link } from './styles/header';
+import { FooterContainer } from '../../containers/footer';
 
 export default function Header({ bg = true, children, ...restProps }) {
     return bg ? <Background { ...restProps}>{children}</Background> : children;
@@ -44,8 +45,8 @@ Header.Banner = function HeaderBanner({ children, ...restProps }) {
     // }, []);
 
     return (
-
-        <header className = "banner"
+        <div>
+            <header className = "banner"
             style={{
                 backgroundSize: "cover",
                 backgroundImage: `url("https://image.tmdb.org/t/p/original${movie?.backdrop_path}")`,
@@ -82,11 +83,14 @@ Header.Banner = function HeaderBanner({ children, ...restProps }) {
         <Row title="Action Movies" fetchUrl={requests.fetchActionMovies} />
         <Row title="Comedy Movies" fetchUrl={requests.fetchComedyMovies} />
         <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies} />
-        <Row title="Romance Movies" fetchUrl={requests.fetchRomanticMovies} />
+        <Row title="Romance Movies" fetchUrl={requests.fetchRomanceMovies} />
         <Row title="Documentaries" fetchUrl={requests.fetchDocumentaries} />
         </div>
-        
+        <FooterContainer/>
         </header>
+        
+        </div>
+        
     );
 }
 

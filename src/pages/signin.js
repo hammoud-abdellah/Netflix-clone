@@ -16,7 +16,7 @@ export default function Signin() {
     const isInvalid = password === '' || emailAddress === '';
     
     const handleSignIn = (event) => {
-        event.preventDefault();
+        event.preventDefault();// on évite le rechargement de la page après la soumission du formulaire.
 
         // firebase work here!
         firebase.auth()
