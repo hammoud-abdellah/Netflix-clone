@@ -27,7 +27,7 @@ export default function Signup() {
       
           // Send email verification
           await result.user.sendEmailVerification({
-            url: "http://localhost:3000/",
+            url: "https://netflix-clone-rho-ashy.vercel.app/",
           });
           alert("Un email de vérification a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception.")
             // Update display name
