@@ -16,29 +16,42 @@ export default function Signup() {
 
     const isInvalid = firstName === '' || password === '' || emailAddress === '';
 
-    const handleSignup = (event) => {
+    const handleSignup = async (event) => {
         event.preventDefault();
+      
+        try {
+          // Do Firebase signup
+          const result = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(emailAddress, password);
+      
+          // Send email verification
+          await result.user.sendEmailVerification({
+            url: "http://localhost:3000/",
+          });
+          alert("Un email de vérification a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception.")
+            // Update display name
+          await result.user.updateProfile({
+            displayName: firstName,
+            photoURL: Math.floor(Math.random() * 5) + 1,
+          });
 
-        // do firebase stuff
-        firebase.auth() 
-        .createUserWithEmailAndPassword(emailAddress, password)
-        .then((result) =>
-            result.user.updateProfile({
-                displayName: firstName,
-                photoURL: Math.floor(Math.random() * 5) + 1,
-            })
-            .then(() => {
-                history.push(ROUTES.BROWSE);
-            })
-        )
-        .catch((error) => {
-            setFirstName('');
-            setEmailAddress('');
-            setPassword('');
-            setError(error.message);
-        });
-    };
-
+          if (result.user.emailVerified){
+           history.push(ROUTES.BROWSE);
+          }
+          else {
+            setError("Veuillez vérifier votre e-mail avant de vous connecter.");
+            console.log("Veuillez vérifier votre e-mail avant de vous connecter.");
+          }
+        } 
+    
+        catch (error) {
+          setFirstName('');
+          setEmailAddress('');
+          setPassword('');
+          setError(error.message);
+        }
+      };
     return (
     
     <>
@@ -75,6 +88,9 @@ export default function Signup() {
                     <Form.TextSmall>
                         This page is protected by Google reCAPTCHA to ensure you're not a bot. Learn more.
                     </Form.TextSmall>
+                    {/* <Form.TextSmall>
+                        Please check your email to verify your account before signing in.
+                    </Form.TextSmall> */}
                 </Form.Base>
             </Form>
         </HeaderContainer>

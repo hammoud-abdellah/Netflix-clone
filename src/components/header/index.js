@@ -33,17 +33,6 @@ Header.Banner = function HeaderBanner({ children, ...restProps }) {
         return str?.length > n ? str.substr(0, n-1) + "..." : str;
     }
 
-    // useEffect(() => {
-    //     window.addEventListener("scroll", () => {
-    //         if (window.scrollY > 100) {
-    //             handleShow(true)
-    //         } else handleShow(false);
-    //     });
-    //     return () => {
-    //         window.removeEventListener("scroll");
-    //     };
-    // }, []);
-
     return (
         <div>
             <header className = "banner"
